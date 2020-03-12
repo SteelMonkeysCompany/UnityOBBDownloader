@@ -93,8 +93,8 @@ internal class GooglePlayObbDownloader : IGooglePlayObbDownloader
 
 		using (var downloaderServiceClass = new AndroidJavaClass("com.unity3d.plugin.downloader.UnityDownloaderService"))
 		{
-			downloaderServiceClass.SetStatic("BASE64_PUBLIC_KEY", PublicKey);
-			downloaderServiceClass.SetStatic("SALT", new byte[] { 1, 43, 256 - 12, 256 - 1, 54, 98, 256 - 100, 256 - 12, 43, 2, 256 - 8, 256 - 4, 9, 5, 256 - 106, 256 - 108, 256 - 33, 45, 256 - 1, 84 });
+			downloaderServiceClass.CallStatic("setPublicKey", PublicKey);
+			downloaderServiceClass.CallStatic("setSalt", new byte[] { 1, 43, 256 - 12, 256 - 1, 54, 98, 256 - 100, 256 - 12, 43, 2, 256 - 8, 256 - 4, 9, 5, 256 - 106, 256 - 108, 256 - 33, 45, 256 - 1, 84 });
 		}
 	}
 

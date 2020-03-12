@@ -4,12 +4,20 @@ import com.google.android.vending.expansion.downloader.impl.DownloaderService;
 
 public class UnityDownloaderService extends DownloaderService {
     // stuff for LVL -- MODIFIED FROM C# SCRIPTS!
-    static String BASE64_PUBLIC_KEY = "REPLACE THIS WITH YOUR PUBLIC KEY - DONE FROM C#";
+    static String BASE64_PUBLIC_KEY = "REPLACE WITH YOUR PUBLIC KEY";
     // used by the preference obfuscater
     static byte[] SALT = new byte[] {
             1, 43, -12, -1, 54, 98,
             -100, -12, 43, 2, -8, -4, 9, 5, -106, -108, -33, 45, -1, 84
     };
+
+    public static void setPublicKey(String key){
+        BASE64_PUBLIC_KEY = key;
+    }
+
+    public static void setSalt(byte[] salt){
+        SALT = salt;
+    }
 
     /**
      * This public key comes from your Android Market publisher account, and it
