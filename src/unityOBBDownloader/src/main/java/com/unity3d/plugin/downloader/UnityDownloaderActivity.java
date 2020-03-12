@@ -65,11 +65,11 @@ public class UnityDownloaderActivity extends Activity implements IDownloaderClie
 			// Request to start the download
 			int startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(this, pendingIntent, UnityDownloaderService.class);
 			
-			if (startResult != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
+			// if (startResult != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
 				// The DownloaderService has started downloading the files, show progress
 				initializeDownloadUI();
 				return;
-			} // otherwise, download not needed so we fall through to starting the movie
+			// } // otherwise, download not needed so we fall through to starting the movie
 		} catch (ClassNotFoundException e) {
 			android.util.Log.e(LOG_TAG, "Cannot find own package! MAYDAY!");
 			e.printStackTrace();

@@ -20,6 +20,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ResolveInfo;
+import android.content.pm.ServiceInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -148,33 +150,14 @@ public class LicenseChecker implements ServiceConnection {
             if (mService == null) {
                 Log.i(TAG, "Binding to licensing service.");
                 try {
+                    Intent serviceIntent = new Intent(new String(Base64.decode("Y29tLmFuZHJvaWQudmVuZGluZy5saWNlbnNpbmcuSUxpY2Vuc2luZ1NlcnZpY2U=")));
+                    ResolveInfo resolveInfo = mContext.getPackageManager().resolveService(serviceIntent, 0);
+                    ServiceInfo serviceInfo = resolveInfo.serviceInfo;
+                    ComponentName componentName = new ComponentName(serviceInfo.packageName, serviceInfo.name);
+                    serviceIntent.setComponent(componentName);
                     boolean bindResult = mContext
                             .bindService(
-                                    new Intent(
-                                            new String(
-                                                    // Base64 encoded -
-                                                    // com.android.vending.licensing.ILicensingService
-                                                    // Consider encoding this in another way in your
-                                                    // code to improve security
-                                                    Base64.decode(
-                                                            "Y29tLmFuZHJvaWQudmVuZGluZy5saWNlbnNpbmcuSUxpY2Vuc2luZ1NlcnZpY2U=")))
-                                                                    // As of Android 5.0, implicit
-                                                                    // Service Intents are no longer
-                                                                    // allowed because it's not
-                                                                    // possible for the user to
-                                                                    // participate in disambiguating
-                                                                    // them. This does mean we break
-                                                                    // compatibility with Android
-                                                                    // Cupcake devices with this
-                                                                    // release, since setPackage was
-                                                                    // added in Donut.
-                                                                    .setPackage(
-                                                                            new String(
-                                                                                    // Base64
-                                                                                    // encoded -
-                                                                                    // com.android.vending
-                                                                                    Base64.decode(
-                                                                                            "Y29tLmFuZHJvaWQudmVuZGluZw=="))),
+                                    serviceIntent,
                                     this, // ServiceConnection.
                                     Context.BIND_AUTO_CREATE);
                     if (bindResult) {
